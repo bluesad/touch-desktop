@@ -49,5 +49,4 @@ npm run watch
 - [hokein/electron-sample-apps](https://github.com/hokein/electron-sample-apps) - small demo apps for the various Electron APIs
 
 ## License
-
-[CC0 1.0 (Public Domain)](LICENSE.md)
+MIT License
