@@ -1,5 +1,5 @@
 {
-  "name": "electron-quick-start-typescript",
+  "name": "touch-desktop",
   "version": "1.0.0",
   "description": "A minimal Electron application written with Typescript",
   "main": "dist/main.js",
@@ -7,7 +7,12 @@
     "build": "tsc",
     "watch": "tsc -w",
     "lint": "eslint -c .eslintrc --ext .ts ./src",
-    "start": "npm run build && electron ./dist/main.js"
+    "prestart": "rm -rf dist && npm run build",
+    "start": "electron-forge start",
+    "prepackage": "rm -rf out",
+    "package": "electron-forge package",
+    "premake": "rm -rf out",
+    "make": "electron-forge make"
   },
   "repository": "https://github.com/electron/electron-quick-start-typescript",
   "keywords": [
@@ -22,6 +27,11 @@
   "license": "MIT",
   "homepage": ".",
   "devDependencies": {
+    "@electron-forge/cli": "^6.0.4",
+    "@electron-forge/maker-deb": "^6.0.4",
+    "@electron-forge/maker-rpm": "^6.0.4",
+    "@electron-forge/maker-squirrel": "^6.0.4",
+    "@electron-forge/maker-zip": "^6.0.4",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "electron": "^22.0.0",
@@ -30,6 +40,7 @@
   },
   "dependencies": {
     "electron-log": "^4.4.8",
+    "electron-squirrel-startup": "^1.0.0",
     "electron-updater": "^5.2.3"
   }
 }
