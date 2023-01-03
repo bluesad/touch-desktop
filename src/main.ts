@@ -27,6 +27,8 @@ function createWindow() {
     movable: false,
     show: false,
 
+    icon: 'src/images/AppIconGenerator.png',
+
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       nodeIntegration: true,
