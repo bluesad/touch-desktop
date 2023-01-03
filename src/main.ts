@@ -18,6 +18,7 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     height: 768,
     width: 1024,
+    title: "Touch Panel",
     resizable: false,
     transparent: false,
     kiosk: false,
@@ -27,7 +28,8 @@ function createWindow() {
     movable: false,
     show: false,
 
-    icon: 'src/images/AppIconGenerator.png',
+    // icon: 'src/images/AppIconGenerator.png',
+    icon: path.join(app.getAppPath(), "src/images/AppIconGenerator.png"),
 
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
@@ -39,6 +41,23 @@ function createWindow() {
   mainWindow.setMenu(null);
   mainWindow.removeMenu();
 
+  if(process.platform==="darwin"){
+    app.dock.setIcon(path.join(app.getAppPath(), "src/images/AppIconGenerator.png"));
+
+    setTimeout(() => {
+      app.dock.bounce();
+    }, 1000);
+  
+    mainWindow.on("blur", () => {
+      const badgeString = app.dock.getBadge();
+      if(badgeString === "") {
+        app.dock.setBadge("1");
+      }else{
+        app.dock.setBadge((parseInt(badgeString) + 1).toString())
+      }
+    })
+  }
+
   const startUrl = process.env.WEB_URL || path.join(__dirname, "../index.html");
 
   // and load the index.html of the app.
@@ -47,9 +66,17 @@ function createWindow() {
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
 
+  // mainWindow.webContents.on("did-finish-load", () => {
+  //   mainWindow.setTitle(app.getName())
+  // });
+
   mainWindow.on("close", () => (mainWindow = null));
 
   mainWindow.on("ready-to-show", mainWindow.show);
+
+  mainWindow.on("page-title-updated", (e) => {
+    e.preventDefault();
+  })
 
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line

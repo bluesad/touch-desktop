@@ -4,7 +4,9 @@
   "description": "A minimal Electron application written with Typescript",
   "main": "dist/main.js",
   "scripts": {
+    "copy-files": "cp -R ./src/images ./dist/",
     "build": "tsc",
+    "postbuild": "npm run copy-files",
     "watch": "tsc -w",
     "lint": "eslint -c .eslintrc --ext .ts ./src",
     "prestart": "rm -rf dist && npm run build",
@@ -22,6 +24,9 @@
     "tutorial",
     "demo",
     "typescript"
+  ],
+  "files": [
+    "src/images"
   ],
   "author": "GitHub",
   "license": "MIT",
