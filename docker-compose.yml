@@ -1,0 +1,15 @@
+version: '3.6'
+services:
+  node:
+    image: node:14-alpine3
+    working_dir: "/home/node/touch-desktop"
+    command: apk add dpkg fakeroot rpm
+    environment:
+      YARN_CACHE_DIR: /home/node/.cache/yarn
+    volumes:
+      - .:/home/node/touch-desktop
+      - ${HOME}/.cache:/home/node/.cache
+      - ${HOME}/.cache:/root/.cache
+      - ${HOME}/.ssh:/home/node/.ssh/.ssh:ro
+      - ${HOME}/.ssh:/root/.ssh/.ssh:ro
+

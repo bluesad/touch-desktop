@@ -1,12 +1,15 @@
 {
   "name": "touch-desktop",
-  "productName": "touch-desktop",
+  "productName": "Touch Panel",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "New Touch Panel Experience",
   "main": ".webpack/main",
   "scripts": {
+    "prestart": "rm -rf .webpack",
     "start": "electron-forge start",
+    "prepackage": "rm -rf out",
     "package": "electron-forge package",
+    "premake": "npm run prepackage",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts,.tsx ."
