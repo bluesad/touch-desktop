@@ -23,15 +23,15 @@ class AppUpdater {
   }
 }
 
+export const RESOURCES_PATH = app?.isPackaged
+  ? path.join(process.resourcesPath, "assets")
+  : path.join(__dirname, "../../assets");
+
+export const getAssetPath = (...paths: string[]): string => {
+  return path.join(RESOURCES_PATH, ...paths);
+};
+
 const createWindow = (): void => {
-
-  const RESOURCES_PATH = app.isPackaged
-    ? path.join(process.resourcesPath, 'assets')
-    : path.join(__dirname, '../../assets');
-
-  const getAssetPath = (...paths: string[]): string => {
-    return path.join(RESOURCES_PATH, ...paths);
-  };
 
   // console.log(path.join(process.resourcesPath, 'assets', 'icon.png'));
 

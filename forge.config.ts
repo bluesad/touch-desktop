@@ -10,19 +10,19 @@ import { rendererConfig } from './webpack.renderer.config';
 
 const config: ForgeConfig = {
   packagerConfig: {
-    icon: "src/images/AppIconGenerator",
+    icon: "assets/icon.png",
   },
   rebuildConfig: {},
   makers: [
     new MakerSquirrel({
-      name: "electron_quick_start",
-      setupIcon: "src/images/AppIconGenerator",
+      name: "Touch Panel",
+      setupIcon: "assets/icon.png",
     }),
     new MakerZIP({}, ["darwin"]),
     new MakerRpm({}),
     new MakerDeb({
       options: {
-        icon: "src/images/AppIconGenerator",
+        icon: "assets/icon.png",
       },
     }),
   ],
