@@ -15,8 +15,7 @@ const config: ForgeConfig = {
   rebuildConfig: {},
   makers: [
     new MakerSquirrel({
-      name: "Touch Panel",
-      setupIcon: "assets/icon.png",
+      // setupIcon: "./assets/icon.png",
     }),
     new MakerZIP({}, ["darwin"]),
     new MakerRpm({}),
