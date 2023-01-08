@@ -26,13 +26,12 @@
  * ```
  */
 
-import './index.css';
+import "./index.css";
+import { showNotification } from "./notification";
 
-console.log('👋 This message is being logged by "renderer.js", included via webpack');
-
-
-
-
+console.log(
+  '👋 This message is being logged by "renderer.js", included via webpack'
+);
 
 const func = async () => {
   const information = document.getElementById("info");
@@ -40,8 +39,15 @@ const func = async () => {
 
   information.innerText = `This app is using Chrome (v${versions.chrome()}), Node.js (v${versions.node()}), and Electron (v${versions.electron()})`;
   information.innerText += `
-  MAC Address ${response}`;
+    MAC Address ${response}`;
   console.log(response); // prints out 'pong'
 };
 
-func()
+func();
+
+function noc() {
+  showNotification();
+  window.showNotification = showNotification;
+}
+
+noc();
