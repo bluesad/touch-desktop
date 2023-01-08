@@ -10,10 +10,22 @@ import { rendererConfig } from './webpack.renderer.config';
 
 const config: ForgeConfig = {
   packagerConfig: {
-    icon: "src/images/AppIconGenerator"
+    icon: "src/images/AppIconGenerator",
   },
   rebuildConfig: {},
-  makers: [new MakerSquirrel({}), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
+  makers: [
+    new MakerSquirrel({
+      name: "electron_quick_start",
+      setupIcon: "src/images/AppIconGenerator",
+    }),
+    new MakerZIP({}, ["darwin"]),
+    new MakerRpm({}),
+    new MakerDeb({
+      options: {
+        icon: "src/images/AppIconGenerator",
+      },
+    }),
+  ],
   plugins: [
     new WebpackPlugin({
       mainConfig,
@@ -21,11 +33,11 @@ const config: ForgeConfig = {
         config: rendererConfig,
         entryPoints: [
           {
-            html: './src/index.html',
-            js: './src/renderer.ts',
-            name: 'main_window',
+            html: "./src/index.html",
+            js: "./src/renderer.ts",
+            name: "main_window",
             preload: {
-              js: './src/preload.ts',
+              js: "./src/preload.ts",
             },
           },
         ],

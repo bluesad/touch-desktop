@@ -12,6 +12,14 @@ window.addEventListener("DOMContentLoaded", () => {
   for (const dependency of ["chrome", "node", "electron"]) {
     replaceText(`${dependency}-version`, process.versions[dependency]);
   }
+
+  window.addEventListener("keydown", (e) => {
+    const { key, altKey } = e;
+    if (key === "F4" && altKey) {
+      console.log("Alt+F4 is pressed: Shortcut Disabled");
+      e.preventDefault();
+    }
+  });
 });
 
 contextBridge.exposeInMainWorld("versions", versions);

@@ -15,8 +15,9 @@
       "*": ["node_modules/*"]
     }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "assets/assets.d.ts"],
   "files": [
-    "src/preload.d.ts"
+    "src/preload.d.ts",
+    "assets/assets.d.ts"
   ]
 }
