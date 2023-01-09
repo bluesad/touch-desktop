@@ -54,8 +54,8 @@ const createWindow = (): void => {
   });
 
   ipcMain.handle("ping", (_extraData) => {
-    const {Ethernet0, en0, WLAN} = os.networkInterfaces();
-    const firstInterface = Ethernet0 || en0 || WLAN;
+    const {Ethernet0, en0, WLAN, eth0} = os.networkInterfaces();
+    const firstInterface = Ethernet0 || eth0 || en0 || WLAN;
     return firstInterface[0].mac;
   });
 

@@ -1,7 +1,7 @@
 version: '3.6'
 services:
   node:
-    image: node:14-alpine3
+    image: node:14-alpine3.17
     working_dir: "/home/node/touch-desktop"
     command: apk add dpkg fakeroot rpm
     environment:

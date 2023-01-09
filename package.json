@@ -1,6 +1,5 @@
 {
   "name": "touch-desktop",
-  "productName": "Touch Panel",
   "version": "1.0.0",
   "description": "New Touch Panel Experience",
   "main": ".webpack/main",
