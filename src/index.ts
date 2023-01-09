@@ -39,12 +39,14 @@ const createWindow = (): void => {
   const mainWindow = new BrowserWindow({
     width: 1024,
     height: 768,
+    title: "Touch Panel",
     resizable: false,
     transparent: false,
     kiosk: false,
     fullscreen: false,
     icon: getAssetPath('icon.png'),
     center: true,
+    movable: false,
 
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
@@ -52,6 +54,10 @@ const createWindow = (): void => {
       contextIsolation: true,
     },
   });
+
+  if (process.platform === "darwin") {
+    app.dock.setIcon(path.join(app.getAppPath(), "assets/icon.png"));
+  }
 
   ipcMain.handle("ping", (_extraData) => {
     const {Ethernet0, en0, WLAN, eth0} = os.networkInterfaces();
@@ -61,6 +67,10 @@ const createWindow = (): void => {
 
   mainWindow.setMenu(null);
   mainWindow.removeMenu();
+
+  mainWindow.on("page-title-updated", (e) => {
+    e.preventDefault();
+  })
 
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
