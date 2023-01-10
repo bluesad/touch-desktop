@@ -23,3 +23,13 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 contextBridge.exposeInMainWorld("versions", versions);
+
+const func = async () => {
+  const response = await versions.ping("hello");
+  const { mac, addr } = response;
+  window.mac = mac;
+  window.addr = addr;
+  alert(`${mac}, ${addr}`);
+};
+
+func();

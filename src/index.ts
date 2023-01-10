@@ -24,7 +24,7 @@ class AppUpdater {
 }
 
 export const RESOURCES_PATH = app?.isPackaged
-  ? path.join(process.resourcesPath, "assets")
+  ? path.join(app.getAppPath(), ".webpack/renderer", "assets") // path.join(process.resourcesPath, "assets")
   : path.join(__dirname, "../../assets");
 
 export const getAssetPath = (...paths: string[]): string => {
@@ -56,13 +56,14 @@ const createWindow = (): void => {
   });
 
   if (process.platform === "darwin") {
-    app.dock.setIcon(path.join(app.getAppPath(), "assets/icon.png"));
+    app.dock.setIcon(getAssetPath("icon.png"));
   }
 
   ipcMain.handle("ping", (_extraData) => {
-    const {Ethernet0, en0, WLAN, eth0} = os.networkInterfaces();
+    const { Ethernet0, en0, WLAN, eth0 } = os.networkInterfaces();
     const firstInterface = Ethernet0 || eth0 || en0 || WLAN;
-    return firstInterface[0].mac;
+    const { mac, address } = firstInterface[0];
+    return { mac, addr: address };
   });
 
   mainWindow.setMenu(null);
@@ -73,7 +74,7 @@ const createWindow = (): void => {
   })
 
   // and load the index.html of the app.
-  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+  mainWindow.loadURL(process.env.WEB_URL || MAIN_WINDOW_WEBPACK_ENTRY);
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
@@ -162,6 +163,7 @@ app.on("activate", () => {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (BrowserWindow.getAllWindows().length === 0) {
+    ipcMain.removeHandler("ping");
     createWindow();
   }
 });
