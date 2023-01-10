@@ -29,7 +29,7 @@ const func = async () => {
   const { mac, addr } = response;
   window.mac = mac;
   window.addr = addr;
-  alert(`${mac}, ${addr}`);
+  alert(`id: ${mac}\r\nip: ${addr}`);
 };
 
 func();
