@@ -1,4 +1,4 @@
-import { app, BrowserWindow, globalShortcut, ipcMain, Menu, session } from "electron";
+import { app, BrowserView, BrowserWindow, globalShortcut, ipcMain, Menu, session } from "electron";
 import os from "os";
 import path from "path";
 
@@ -80,6 +80,18 @@ const createWindow = (): void => {
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
 
+  mainWindow.webContents.on("before-input-event", (event: Event, input: Electron.Input) => {
+    if(input.type === "keyUp"){
+      console.log(input);
+    }
+  });
+
+  mainWindow.webContents.on("did-finish-load", () => {
+    mainWindow.webContents.insertCSS("h3 a{background: red!important;}");
+    mainWindow.webContents.executeJavaScript("alert('hello, world')");
+    mainWindow.webContents.insertText("'test'");
+  });
+
   // mainWindow.webContents.on("before-input-event", (event, input) => {
   //   if (input.key == "F4" && input.alt) {
   //     console.log("Alt+F4 is pressed: Shortcut Disabled");
@@ -148,6 +160,25 @@ app.whenReady().then(createWindow).then(() => {
     globalShortcut.unregister('F5');
     globalShortcut.unregister('CommandOrControl+F5');
     // globalShortcut.unregister('Alt+F4');
+  });
+
+  const view = new BrowserView();
+  const bounds = view.getBounds();
+  view.webContents.loadURL("http://www.baidu.com/");
+  view.webContents.on("did-finish-load", () =>
+    view.setBounds({
+      x: bounds.x,
+      y: bounds.y,
+      width: bounds.width,
+      height: bounds.height,
+    })
+  );
+
+  view.setAutoResize({
+    width: true,
+    height: true,
+    horizontal: true,
+    vertical: false,
   });
 }).catch(console.error);
 

@@ -3,7 +3,8 @@ services:
   node:
     image: node:14-alpine3.17
     working_dir: "/home/node/touch-desktop"
-    command: apk add dpkg fakeroot rpm
+    command: apk add git dpkg fakeroot rpm
+    entrypoint: sh -c "apk add git dpkg fakeroot rpm"
     environment:
       YARN_CACHE_DIR: /home/node/.cache/yarn
     volumes:

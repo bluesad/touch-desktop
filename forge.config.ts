@@ -8,6 +8,9 @@ import { WebpackPlugin } from '@electron-forge/plugin-webpack';
 import { mainConfig } from './webpack.main.config';
 import { rendererConfig } from './webpack.renderer.config';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const packageJSON = require("./package.json");
+
 const config: ForgeConfig = {
   packagerConfig: {
     icon: "assets/icon.png",
@@ -15,10 +18,24 @@ const config: ForgeConfig = {
   rebuildConfig: {},
   makers: [
     new MakerSquirrel({
-      // setupIcon: "./assets/icon.png",
+      exe: `${packageJSON.name}.exe`,
+      // setupIcon: "assets/icon.png",
+      // loadingGif: "assets/icon.png",
+      title: `${packageJSON.name}`,
+      setupExe: `${packageJSON.name} Setup - v${packageJSON.version}.exe`,
+      skipUpdateIcon: true,
     }),
     new MakerZIP({}, ["darwin"]),
     new MakerRpm({}),
+    {
+      name: '@electron-forge/maker-dmg',
+      config: {
+        icon: "assets/icon.png",
+        overwrite: true,
+        format: "ULFO",
+        name: `${packageJSON.name}`,
+      },
+    },
     new MakerDeb({
       options: {
         icon: "assets/icon.png",

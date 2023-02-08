@@ -19,7 +19,9 @@ window.addEventListener("DOMContentLoaded", () => {
       console.log("Alt+F4 is pressed: Shortcut Disabled");
       e.preventDefault();
     }
+    console.log(key);
   });
+  func();
 });
 
 contextBridge.exposeInMainWorld("versions", versions);
@@ -32,4 +34,4 @@ const func = async () => {
   alert(`id: ${mac}\r\nip: ${addr}`);
 };
 
-func();
+// func();
