@@ -1,2 +1,2 @@
 docker-exec:
-	docker-compose run -u root --rm --service-ports node sh
+	docker-compose run -u root --rm --service-ports node

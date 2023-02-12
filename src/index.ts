@@ -75,7 +75,11 @@ const createWindow = (): void => {
   })
 
   // and load the index.html of the app.
-  mainWindow.loadURL(process.env.WEB_URL || MAIN_WINDOW_WEBPACK_ENTRY);
+  mainWindow.loadURL(
+    process.env.WEB_URL ||
+      "http://17.88.147.16:8000" ||
+      MAIN_WINDOW_WEBPACK_ENTRY
+  );
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
@@ -88,7 +92,7 @@ const createWindow = (): void => {
 
   mainWindow.webContents.on("did-finish-load", () => {
     mainWindow.webContents.insertCSS("h3 a{background: red!important;}");
-    mainWindow.webContents.executeJavaScript("alert('hello, world')");
+    // mainWindow.webContents.executeJavaScript("alert('hello, world')");
     mainWindow.webContents.insertText("'test'");
   });
 
