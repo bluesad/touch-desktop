@@ -1,6 +1,12 @@
 import type { Configuration } from 'webpack';
+import { default as CopyPlugin } from "copy-webpack-plugin";
+import path from "path";
 
 import { rules } from './webpack.rules';
+
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const Dotenv = require("dotenv-webpack");
 
 export const mainConfig: Configuration = {
   /**
@@ -15,4 +21,14 @@ export const mainConfig: Configuration = {
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json'],
   },
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        {
+          from:  path.resolve(__dirname, ".env.json"),
+        },
+      ],
+    }),
+    new Dotenv(),
+  ],
 };

@@ -1,6 +1,7 @@
 import { app, BrowserView, BrowserWindow, globalShortcut, ipcMain, Menu, session } from "electron";
 import os from "os";
 import path from "path";
+import fs from "fs";
 
 import { autoUpdater } from "electron-updater";
 import log from "electron-log";
@@ -30,6 +31,9 @@ export const RESOURCES_PATH = app?.isPackaged
 export const getAssetPath = (...paths: string[]): string => {
   return path.join(RESOURCES_PATH, ...paths);
 };
+
+// const dotenv = fs.readFileSync(path.join(__dirname, '.env.json'));
+// console.log(JSON.parse(dotenv.toString())['WEB_URL'], process.env.WEB_URL);
 
 const createWindow = (): void => {
 
@@ -75,11 +79,9 @@ const createWindow = (): void => {
   })
 
   // and load the index.html of the app.
-  mainWindow.loadURL(
-    process.env.WEB_URL ||
-      "http://17.88.147.16:8000" ||
-      MAIN_WINDOW_WEBPACK_ENTRY
-  );
+  const dotenv = fs.readFileSync(path.join(__dirname, '.env.json'));
+  const dynamicUrl = JSON.parse(dotenv.toString())['WEB_URL']
+  mainWindow.loadURL(dynamicUrl || process.env.WEB_URL || MAIN_WINDOW_WEBPACK_ENTRY);
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
@@ -149,6 +151,21 @@ app.whenReady().then(createWindow).then(() => {
     globalShortcut.register("CommandOrControl+R", () => {
       console.log("CommandOrControl+R is pressed: Shortcut Disabled");
     });
+    globalShortcut.register('Alt+CommandOrControl+I', () => {
+      console.log('Electron loves global shortcuts, Alt+CommandOrControl+I!')
+    });
+    globalShortcut.register('CommandOrControl+T', () => {
+      console.log('Electron loves global shortcuts, CommandOrControl + T!')
+    });
+    globalShortcut.register('CommandOrControl+N', () => {
+      console.log('Electron loves global shortcuts, CommandOrControl + N!')
+    });
+    globalShortcut.register('CommandOrControl+W', () => {
+      console.log('Electron loves global shortcuts, CommandOrControl + W!')
+    });
+    globalShortcut.register('CommandOrControl+Q', () => {
+      console.log('Electron loves global shortcuts, CommandOrControl + Q!')
+    });
     globalShortcut.register("F5", () => {
       console.log("F5 is pressed: Shortcut Disabled");
     });
@@ -161,6 +178,11 @@ app.whenReady().then(createWindow).then(() => {
   });
   app.on('browser-window-blur', function () {
     globalShortcut.unregister('CommandOrControl+R');
+    globalShortcut.unregister('Alt+CommandOrControl+I');
+    globalShortcut.unregister('CommandOrControl+T');
+    globalShortcut.unregister('CommandOrControl+N');
+    globalShortcut.unregister('CommandOrControl+W');
+    globalShortcut.unregister('CommandOrControl+Q');
     globalShortcut.unregister('F5');
     globalShortcut.unregister('CommandOrControl+F5');
     // globalShortcut.unregister('Alt+F4');
