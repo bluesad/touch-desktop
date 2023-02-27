@@ -90,12 +90,11 @@ const createWindow = async (): Promise<void> => {
 
   // and load the index.html of the app.
   const dotenv = fs.readFileSync(path.join(__dirname, '.env.json'));
-  const dynamicUrl =
-    "http://localhost:4000" || JSON.parse(dotenv.toString())["WEB_URL"];
+  const dynamicUrl = JSON.parse(dotenv.toString())["WEB_URL"];
   mainWindow.loadURL(dynamicUrl || process.env.WEB_URL || MAIN_WINDOW_WEBPACK_ENTRY);
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
   mainWindow.webContents.on("before-input-event", (event: Event, input: Electron.Input) => {
     if(input.type === "keyUp"){
